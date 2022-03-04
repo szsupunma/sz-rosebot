@@ -136,15 +136,15 @@ start_button = InlineKeyboardMarkup(
     [
         [
             InlineKeyboardButton(
-                text="❓ Commands Menu", callback_data="bot_commands"
+                text="❓ Commands Menu ❓", callback_data="bot_commands"
             ),
         ],
         [
            InlineKeyboardButton(
-                text="🛠 Github", url="https://github.com/szsupunma"
+                text="💫 Support", url="https://t.me/Darkenbotsupport"
             ),
             InlineKeyboardButton(
-                text="👨‍💻Developer", url="http://t.me/supunmabot"
+                text="👨‍💻Developer", url="http://t.me/Oshebrosl1"
             ),
         ],
         [
@@ -157,7 +157,7 @@ start_button = InlineKeyboardMarkup(
 )
 
 start_text = f"""
-Hello There ! I'm **Rosebot** ✨ 
+Hello There ! I'm **GhostBot** 👻
 An  advanced telegram Group management Bot For help 
 You Protect Your Groups & Suit For All Your Needs.
 """
@@ -179,9 +179,9 @@ basichelp_string = """
 ✘ Base commands are the basic tools of Rose Bot which help you to manage 
 your group easily and effectivelyYou can choose 
 an option below, by clicking a button.
-Also you can ask anything in [Support Group](https://t.me/slbotzone).
+Also you can ask anything in [Support Group](https://t.me/Darkenbotsupport).
 
->> [Shorter the Way, Faster you Go! 🏃‍♂️](https://t.me/szteambots/872)
+>> [Shorter the Way, Faster you Go! 🏃‍♂️](https://t.me/Darkenbotsteam)
 """
 
 funtools_string = """
@@ -189,9 +189,9 @@ funtools_string = """
 
 ✘ Extra tools which are available in bot and tools made for fun are here
 You can choose an option below, by clicking a button.
-Also you can ask anything in [Support Group](https://t.me/slbotzone).
+Also you can ask anything in [Support Group](https://t.me/Darkenbotsupport).
 
-Click buttons to get help [?](https://t.me/szteambots/872)
+Click buttons to get help [?](https://t.me/Darkenbotsteam)
 """
 
 advtools_string = """
@@ -200,9 +200,9 @@ advtools_string = """
 ✘ Advanced commands will help you to secure your groups 
 from attackers and do many stuff in group from a single bot
 You can choose an option below, by clicking a button.
-Also you can ask anything in [Support Group](https://t.me/slbotzone).
+Also you can ask anything in [Support Group](https://t.me/Darkenbotsupport).
 
->> [Shorter the Way, Faster you Go! 🏃‍♂️](https://t.me/szteambots/872)
+>> [Shorter the Way, Faster you Go! 🏃‍♂️](https://t.me/Darkenbotsteam)
 """
 
 @app.on_message(filters.command(["start", f"@{BOT_USERNAME}"]))
@@ -347,10 +347,10 @@ keyboar = InlineKeyboardMarkup(
                     ],
                     [
                         InlineKeyboardButton(
-                            text="News Channel 🗣", url="https://t.me/szteambots"
+                            text="News Channel 🗣", url="https://t.me/Darkenbotsteam"
                         ),
                         InlineKeyboardButton(
-                            text="Support Group👥", url="https://t.me/slbotzone"
+                            text="Support Group👥", url="https://t.me/Darkenbotsupport"
                         ),
                     ],
                     [
@@ -843,8 +843,8 @@ async def commands_callbacc(_, CallbackQuery):
     await CallbackQuery.message.delete()
 
 TEXT_PART_1 = """
-**Welcome to the Rose Configuration**
-The first thing to do is to add Rose Bot ✨ to your group! 
+**Welcome to the Ghost Configuration**
+The first thing to do is to add Ghost Bot ✨ to your group! 
 For doing that, press the under button and select your group,
 then press Done to continue the tutorial..
 """
@@ -873,7 +873,7 @@ We would love to help you.
 
 BUTTON_1 = InlineKeyboardMarkup(
         [[        
-        InlineKeyboardButton('Add Rose to Chat ! 🎉', url='http://t.me/szrosebot?startgroup=new')
+        InlineKeyboardButton('Add Rose to Chat ! 🎉', url='http://t.me/darkenghostbot?startgroup=new')
         ],
         [InlineKeyboardButton('Done ✅', callback_data="next_1")
         ]]
@@ -916,9 +916,9 @@ async def popat(_, CallbackQuery):
 text = """
 @szrosebot is one of the fastest and most feature filled group manager.
 
-Rose ✨ is developed and actively maintained by @szteambots!
+Ghost ✨ is developed and actively maintained by @Darkenbotsteam!
 
-Rose has been online since 2021/8/10 and have many [groups and users.](https://t.me/szteambots/890)
+Rose has been online since 2022/2/28 and have many [groups and users.](https://t.me/Darkenbotsteam)
 
 **Why Rose:**
 - **Simple**: Easy usage and compaitble with many bot commands.
@@ -961,7 +961,7 @@ async def commands_callbacc(_, CallbackQuery):
 
 TEXT_PAT_1 = """
 **Welcome to the Rose Configuration**
-The first thing to do is to add Rose Bot ✨ to your group! 
+The first thing to do is to add Ghost Bot ✨ to your group! 
 For doing that, press the under button and select your group,
 then press Done to continue the tutorial..
 """
@@ -990,7 +990,7 @@ We would love to help you.
 
 BUTON_1 = InlineKeyboardMarkup(
         [[        
-        InlineKeyboardButton('Add Rose to Chat ! 🎉', url='http://t.me/szrosebot?startgroup=new')
+        InlineKeyboardButton('Add Rose to Chat ! 🎉', url='http://t.me/darkenghostbot?startgroup=new')
         ],
         [InlineKeyboardButton('Done ✅', callback_data="next_100")
         ]]
