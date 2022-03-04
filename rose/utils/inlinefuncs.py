@@ -91,7 +91,7 @@ async def alive_function(answers):
     )
 
     msg = f"""
-**[Rose✨](https://github.com/szsupunma/sz-rose-bot):**
+**[Ghost👻](http://t.me/darkenghostbot):**
 **System Stats:**
 **MainBot:** `{bot_state}`
 **Python:** `{pyver.split()[0]}`
@@ -103,7 +103,7 @@ async def alive_function(answers):
  DB 1 [Main]: `Running`
  DB 2 [Main]: `Running`
  
-[->> Shorter the Way, Faster you Go! 🏃‍♂️](https://t.me/szteambots/872) 
+[->> Shorter the Way, Faster you Go! 🏃‍♂️](https://t.me/Darkenbotsteam) 
 """
     answers.append(
         InlineQueryResultArticle(
