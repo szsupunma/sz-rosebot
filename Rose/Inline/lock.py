@@ -2,9 +2,8 @@ from Rose import bot as app
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton,InlineKeyboardMarkup
 
-thejana2 = """
+supunma = """
 **Basic Locktypes available for a chat: **
-
 video
 audio
 document
@@ -37,7 +36,6 @@ spoiler
 spam
 porn
 anonchannel
-
 Rose will delete user's message if locked content is sent
 """
 
@@ -75,7 +73,6 @@ asuttons = InlineKeyboardMarkup(
 
 supunm = """
 **Permissions Locks Available for a chat:**
-
 send_messages
 send_stickers
 send_gifs
@@ -88,7 +85,6 @@ change_info
 invite_user
 pin_messages
 all_permissions
-
 """
 @app.on_callback_query(filters.regex("_kcd"))
 async def commands_callbacc(_, CallbackQuery):
@@ -102,12 +98,10 @@ async def commands_callbacc(_, CallbackQuery):
 
 supunmas = """
 **Examples:**
-
 - Lock stickers with:
 > /lock sticker
 - You can lock/unlock multiple items by chaining them:
 > /lock sticker photo gif video
-
 """
 
 @app.on_callback_query(filters.regex("_lcd"))
