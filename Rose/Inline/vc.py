@@ -142,11 +142,7 @@ supunmasc = """
 We was added **Multi Assistant Mode** for High Number of Chats.
 
 👮‍♀️ **OFFICIAL Assistants**:-
-• Assistant 1️⃣ :- @vcpalyassistant
-• Assistant 2️⃣ :- @vcpalyassistant1
-• Assistant 3️⃣ :- @vcpalyassistant2
-• Assistant 4️⃣ :- @vcpalyassistant3
-• Assistant 5️⃣ :- @vcpalyassistant4
+• Assistant 1️⃣ :- @asistantclones
 
 **Credits** - 
 -「🇮🇳」°『||ᴀᴅ•✘•ᴍᴜꜱɪᴄ||』
