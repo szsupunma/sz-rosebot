@@ -8,7 +8,7 @@
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/szsupunma/sz-rosebot/graphs/commit-activity)
 [![Crowdin](https://badges.crowdin.net/szrosebot/localized.svg)](https://crowdin.com/project/szrosebot)
 <p align='left'>
- <a href="https://www.supun.ml/deploy.html"><img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy on Heroku"></a></br></br>
+ <a href="https://github.com/szsupunma/sz-rosebot/deploy.html"><img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy on Heroku"></a></br></br>
 </p>
 
 
