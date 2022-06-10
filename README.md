@@ -71,8 +71,8 @@ If you want to make your bot even more unique, you can create a customized rose 
  - [Logs Channel ](https://t.me/szroselog)
  - [Network ](https://t.me/TeamSzRoseBot)
 
-[![License](https://www.gnu.org/graphics/agplv3-155x51.png)](LICENSE)   
-Rose is licensed under [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html) v3 or later.
+[![License](https://www.gnu.org/graphics/gplv3-127x51.png)](LICENSE)   
+Rose is licensed under [GNU General Public License](https://www.gnu.org/graphics/gplv3-127x51.png) v3 or later.
 
 ## Special credits
 Special thanks to these amazing projects/people which/who help power Rose bot
