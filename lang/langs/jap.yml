@@ -1,12 +1,12 @@
 name : 日本
 
 #menu - menu.py
-menu ："Roseは2021年8月10日に作成されました。\ n現在、Pyrogramライブラリのみを使用してWilliamButcherBotとAlita_Robotのプラグインを開発および保守しています。\ n \ n•作成者：[supun]（https://t.me/ supunma）\ n•言語：[python 3]（https://www.python.org/）\ n•データベース：[Mongo db]（https://cloud.mongodb.com/）\ n•サーバー：[ Heroku]（https://heroku.com/）\ n•ビルドバージョン：2.0 \ n \ n @ Theszrosebot "
+menu ："Roseは2021年8月10日に作成されました。\ n現在、Pyrogramライブラリのみを使用してWilliamButcherBotとAlita_Robotのプラグインを開発および保守しています。\ n \ n•作成者：[supun]（https://t.me/ supunma）\ n•言語：[python 3]（https://www.python.org/）\ n•データベース：[Mongo db]（https://cloud.mongodb.com/）\ n•サーバー：[ Heroku]（https://heroku.com/）\ n•ビルドバージョン：2.0 \ n \ n @ Theszrosebot"
 back : "« Back"
 
 #main - main.py
-main1："こんにちは！私は{}です\ n \ nグループを管理し、グループを保護し、すべてのニーズに対応する高度な電報グループ管理ボットです。"
-main2："私を使用する方法について質問がある場合は私をPMしてください! "
+main1："こんにちは！私は{}です\ n \ nグループを管理し、グループを保護し、すべてのニーズに対応する高度な電報グループ管理ボットです"
+main2："私を使用する方法について質問がある場合は私をPMしてください!"
 main3："ここをクリック"
 main4："{}に関するヘルプを取得するには、下のボタンをクリックしてください"
 main5："ヘルプメニューへようこそ\ n \n私はいくつかの便利な機能を備えたグループ管理ボットです。\n下のボタンをクリックして、そのモジュールに関するヘルプメニューを開きます\ nバグを見つけたり、使用方法について質問がある場合は、 \ n私の[ドキュメント]（https://szsupunma.gitbook.io/rose-bot/）を参照するか、@szteambotsにアクセスしてください。\n\nすべてのコマンドは/"で使用できます"
