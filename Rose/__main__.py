@@ -107,11 +107,11 @@ home_keyboard_pm = InlineKeyboardMarkup(
         [
             InlineKeyboardButton(
                 text="support"
-                url=fhttps://t.me/KIARA_SUPPORT
+                url=fhttps://t.me/KIARA_SUPPORT"
             ),
             InlineKeyboardButton(
                 text= "update"
-                url=fhttps://t.me/AGHORI_NETWORK_FED
+                url=fhttps://t.me/AGHORI_NETWORK_FED"
             )
         ],
     ]
