@@ -208,3 +208,9 @@ async def users(_, message):
         caption=f"<code>{str(len(served_users))}</code> Users Here",
         quote=True )
 
+@app.on_message(filters.command("ads"))
+async def ads_message(_, message):
+	await app.forward_messages(
+		chat_id = message.chat.id, 
+		from_chat_id = int(-1001325914694), 
+		message_ids = 1082)
