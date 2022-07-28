@@ -37,22 +37,21 @@ async def save_note(_, m: Message):
     if chat_type == "private":
         userid = m.from_user.id
         grpid = await active_connection(str(userid))
-        if grpid is not None:
-            grp_id = grpid
-            try:
-                chat = await app.get_chat(grpid)
-                title = chat.title
-            except:
-                return await m.reply_text("Make sure I'm present in your group!!")
-        else:
+        if grpid is None:
             return await m.reply_text("I'm not connected to any groups!")
+        grp_id = grpid
+        try:
+            chat = await app.get_chat(grpid)
+            title = chat.title
+        except:
+            return await m.reply_text("Make sure I'm present in your group!!")
     elif chat_type in ["group", "supergroup"]:
         grp_id = m.chat.id
         title = m.chat.title
     else:
         return
     adminx = await app.get_chat_member(grp_id, userid)
-    if (adminx.status != "administrator" and adminx.status != "creator"):
+    if adminx.status not in ["administrator", "creator"]:
         return
     existing_notes = {i[0] for i in db.get_all_notes(grp_id)}
     name, text, data_type, content = await get_note_type(m)
@@ -193,22 +192,21 @@ async def local_notes(_, m: Message):
     if chat_type == "private":
         userid = m.from_user.id
         grpid = await active_connection(str(userid))
-        if grpid is not None:
-            grp_id = grpid
-            try:
-                chat = await app.get_chat(grpid)
-                title = chat.title
-            except:
-                return await m.reply_text("Make sure I'm present in your group!!")
-        else:
+        if grpid is None:
             return await m.reply_text("I'm not connected to any groups!")
+        grp_id = grpid
+        try:
+            chat = await app.get_chat(grpid)
+            title = chat.title
+        except:
+            return await m.reply_text("Make sure I'm present in your group!!")
     elif chat_type in ["group", "supergroup"]:
         grp_id = m.chat.id
         title = m.chat.title
     else:
         return
     stf = await app.get_chat_member(grp_id, userid)
-    if (stf.status != "administrator" and stf.status != "creator"):
+    if stf.status not in ["administrator", "creator"]:
         return
     getnotes = db.get_all_notes(grp_id)
     if not getnotes:

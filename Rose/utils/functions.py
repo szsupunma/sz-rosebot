@@ -72,22 +72,18 @@ async def extract_user_and_reason(message, sender_chat=False):
     reason = None
     if message.reply_to_message:
         reply = message.reply_to_message
-        if not reply.from_user:
-            if (
+        if reply.from_user:
+            id_ = reply.from_user.id
+
+        elif (
                 reply.sender_chat
                 and reply.sender_chat != message.chat.id
                 and sender_chat
             ):
-                id_ = reply.sender_chat.id
-            else:
-                return None, None
+            id_ = reply.sender_chat.id
         else:
-            id_ = reply.from_user.id
-
-        if len(args) < 2:
-            reason = None
-        else:
-            reason = text.split(None, 1)[1]
+            return None, None
+        reason = None if len(args) < 2 else text.split(None, 1)[1]
         return id_, reason
     if len(args) == 2:
         user = text.split(None, 1)[1]
@@ -146,11 +142,8 @@ def extract_text_and_keyb(ikb, text: str, row_width: int = 2):
     keyboard = {}
     try:
         text = text.strip()
-        if text.startswith("`"):
-            text = text[1:]
-        if text.endswith("`"):
-            text = text[:-1]
-
+        text = text.removeprefix("`")
+        text = text.removesuffix("`")
         text, keyb = text.split("~")
 
         keyb = findall(r"\[.+\,.+\]", keyb)

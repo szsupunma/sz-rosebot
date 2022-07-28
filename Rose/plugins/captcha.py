@@ -21,7 +21,7 @@ async def add_chat(client, message: Message, _):
     chat_id = message.chat.id
     user_id = message.from_user.id
     user = await app.get_chat_member(chat_id, user_id)
-    if user.status == "creator" or user.status == "administrator":
+    if user.status in ["administrator", "creator"]:
       chat = captchas().chat_in_db(chat_id)
       if chat:
             await message.reply_text(_["capt1"])
@@ -81,13 +81,13 @@ async def send_captcha(app,message):
 async def del_chat(client, message: Message, _):
     chat_id = message.chat.id
     user = await app.get_chat_member(message.chat.id, message.from_user.id)
-    if user.status == "creator" or user.status == "administrator" :
+    if user.status in ["administrator", "creator"]:
         j = captchas().delete_chat(chat_id)
         if j:
             await message.reply_text(_["capt3"])
 
 __MODULE__ = Extra
-__HELP__ = f"""
+__HELP__ = """
 **Commands:**
  - /id: Get the id of user or chat.
  - /info: Get basic information of a user.

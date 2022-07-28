@@ -99,7 +99,7 @@ def LastOnline(user: User):
         return datetime.fromtimestamp(user.status.date).strftime( "%a, %d %b %Y, %H:%M:%S")
 
 def FullName(user: User):
-    return user.first_name + " " + user.last_name if user.last_name else user.first_name
+    return f"{user.first_name} {user.last_name}" if user.last_name else user.first_name
 
 @app.on_message(filters.command(["info"]))
 async def whois(client, message):
@@ -112,7 +112,7 @@ async def whois(client, message):
         get_user = cmd[1]
         try:
             get_user = int(cmd[1])
-        except ValueError:
+        except:
             pass
     try:
         user = await app.get_users(get_user)
@@ -120,7 +120,7 @@ async def whois(client, message):
         return await message.reply("I don't know that User.")
     desc = await app.get_chat(get_user)
     desc = desc.description
-    await message.reply_text(infotext.format(full_name=FullName(user),user_id=user.id,user_dc=user.dc_id,first_name=user.first_name,last_name=user.last_name if user.last_name else "",username=user.username if user.username else "",last_online=LastOnline(user),bio=desc if desc else desc,),disable_web_page_preview=True)
+    await message.reply_text(infotext.format(full_name=FullName(user), user_id=user.id, user_dc=user.dc_id, first_name=user.first_name, last_name=user.last_name or "", username=user.username or "", last_online=LastOnline(user), bio=desc or desc), disable_web_page_preview=True)
 
 session = ClientSession()
 pattern = re.compile(r"^text/|json$|yaml$|xml$|toml$|x-sh$|x-shellscript$")
@@ -163,10 +163,7 @@ async def paste_func(_, message: Message):
     link = await paste(content)
     kb = [[InlineKeyboardButton(text="Paste Link ", url=link)]]
     try:
-        if m.from_user.is_bot:
-            await message.reply_photo(photo=link,quote=False,caption="Pasted",reply_markup=InlineKeyboardMarkup(kb),)
-        else:
-            await message.reply_photo(photo=link,quote=False,caption="Pasted",reply_markup=InlineKeyboardMarkup(kb),)
+        await message.reply_photo(photo=link,quote=False,caption="Pasted",reply_markup=InlineKeyboardMarkup(kb))
         await m.delete()
     except Exception:
         await m.edit("Here's your paste", reply_markup=InlineKeyboardMarkup(kb))
@@ -204,8 +201,7 @@ async def quotify(messages: list):
     return [True, sticker]
 
 def getArg(message: Message) -> str:
-    arg = message.text.strip().split(None, 1)[1].strip()
-    return arg
+    return message.text.strip().split(None, 1)[1].strip()
 
 def isArgInt(message: Message) -> list:
     count = getArg(message)

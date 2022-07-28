@@ -39,7 +39,7 @@ async def addconnection(client, message: Message, _):
         group_id = message.chat.id
     try:
         st = await app.get_chat_member(group_id, userid)
-        if (st.status != "administrator" and st.status != "creator"):
+        if st.status not in ["administrator", "creator"]:
             return await message.reply_text(_["connection3"])
     except Exception as e:
         logger.exception(e)
@@ -78,7 +78,7 @@ async def deleteconnection(client, message: Message, _):
     elif chat_type in ["group", "supergroup"]:
         group_id = message.chat.id
         st = await app.get_chat_member(group_id, userid)
-        if (st.status != "administrator"and st.status != "creator"):
+        if st.status not in ["administrator", "creator"]:
             return
         delcon = await delete_connection(str(userid), str(group_id))
         if delcon:

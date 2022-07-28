@@ -24,15 +24,12 @@ async def warn(client, message: Message, _):
             reason = message.text.split(None, 1)[1]
         else:
             reason = None
-    elif not message.reply_to_message:
+    else:
         r_id = message.message_id
         if len(message.text.split()) >= 3:
             reason = message.text.split(None, 2)[2]
         else:
             reason = None
-    else:
-        reason = None
-
     if not len(message.command) > 1 and not message.reply_to_message:
         await message.reply_text(_["warn1"])
         return

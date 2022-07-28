@@ -30,7 +30,7 @@ HELPABLE = {}
 async def start_bot():
     global HELPABLE
     for module in ALL_MODULES:
-        imported_module = importlib.import_module("Rose.plugins." + module)
+        imported_module = importlib.import_module(f"Rose.plugins.{module}")
         if (
             hasattr(imported_module, "__MODULE__")
             and imported_module.__MODULE__
@@ -51,7 +51,7 @@ async def start_bot():
             j = 0
         else:
             all_module += "•≫ Successfully imported:{:<15}.py".format(i)
-        j += 1           
+        j += 1
     restart_data = await clean_restart_stage()
     try:
         if restart_data:
@@ -63,7 +63,7 @@ async def start_bot():
 
         else:
             await app.send_message(LOG_GROUP_ID, "Bot started!")
-    except Exception:
+    except:
         pass
     print(f"{all_module}")
     print("""
@@ -297,14 +297,10 @@ async def help_button(client, query, _):
     create_match = re.match(r"help_create", query.data)
     top_text = _["main5"]
     if mod_match:
-        module = (mod_match.group(1)).replace(" ", "_")
-        text = (
-            "{} **{}**:\n".format(
-                "Here is the help for", HELPABLE[module].__MODULE__
-            )
-            + HELPABLE[module].__HELP__
-            + "\n👨‍💻Dᴇᴠᴇʟᴏᴘᴇʀ : @supunma"
-        )
+        module = mod_match[1].replace(" ", "_")
+        text = f"Here is the help for **{HELPABLE[module].__MODULE__}**:\n{HELPABLE[module].__HELP__}" + "\n👨‍💻Dᴇᴠᴇʟᴏᴘᴇʀ : @supunma"
+
+
         if hasattr(HELPABLE[module], "__helpbtns__"):
                        button = (HELPABLE[module].__helpbtns__) + [[InlineKeyboardButton("« Back", callback_data="bot_commands")]]
         if not hasattr(HELPABLE[module], "__helpbtns__"): button = [[InlineKeyboardButton("« Back", callback_data="bot_commands")]]
@@ -322,7 +318,7 @@ async def help_button(client, query, _):
         )
         await query.message.delete()
     elif prev_match:
-        curr_page = int(prev_match.group(1))
+        curr_page = int(prev_match[1])
         await query.message.edit(
             text=top_text,
             reply_markup=InlineKeyboardMarkup(
@@ -332,7 +328,7 @@ async def help_button(client, query, _):
         )
 
     elif next_match:
-        next_page = int(next_match.group(1))
+        next_page = int(next_match[1])
         await query.message.edit(
             text=top_text,
             reply_markup=InlineKeyboardMarkup(

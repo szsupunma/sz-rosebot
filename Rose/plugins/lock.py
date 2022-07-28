@@ -85,15 +85,15 @@ async def tg_lock(message, permissions: list, perm: str, lock: bool):
     if lock:
         if perm not in permissions:
             return await message.reply_text("Already locked.")
-    else:
-        if perm in permissions:
-            return await message.reply_text("Already Unlocked.")
+    elif perm in permissions:
+        return await message.reply_text("Already Unlocked.")
     (permissions.remove(perm) if lock else permissions.append(perm))
     permissions = {perm: True for perm in list(set(permissions))}
     try:
         await pbot.set_chat_permissions(message.chat.id, ChatPermissions(**permissions))
     except ChatNotModified:
         return await message.reply_text("<b>To unlock this, you have to unlock</b><code>messages</code><b>first.</b>")
+
 
 @pbot.on_message(filters.command("lock") & ~filters.private & ~filters.via_bot & admin_filter)
 async def lock(_, message):
@@ -109,78 +109,74 @@ async def lock(_, message):
             return await message.reply_text(f"{message.from_user.mention},You need to be an admin with <b>restrict members<b> permission.")
         permissions = await current_chat_permissions(chat_id)
         if parameter in permdata:
-            await tg_lock(message,permissions,permdata[parameter],True if state == "lock" else False,)
-            return await message.reply_text((f"<b>Locked</b> {parameter}." if state == "lock" else f"<b>Unlocked</b> {parameter}."))       
+            await tg_lock(message, permissions, permdata[parameter], state == "lock")
+            return await message.reply_text((f"<b>Locked</b> {parameter}." if state == "lock" else f"<b>Unlocked</b> {parameter}."))
         elif parameter == "all_permissions" and state == "lock":
             await _.set_chat_permissions(chat_id, ChatPermissions())
             await message.reply_text("Locked All Permissions.")
         elif parameter == "all_permissions" and state == "unlock":   
-            for i in range (0,(len(array4))-2):
-                await tg_lock(message,permissions,array4[i],True if state == "lock" else False)
-            return await message.reply(f"All permissions unlocked")
+            for i in range((len(array4))-2):
+                await tg_lock(message, permissions, array4[i], state == "lock")
+            return await message.reply("All permissions unlocked")
         elif parameter in data and state == "lock":
-            okletsgo = lockdb.find_one({f"{data[parameter]}": message.chat.id})
-            if okletsgo:
+            if okletsgo := lockdb.find_one({f"{data[parameter]}": message.chat.id}):
                 await message.reply(f"{parameter} already locked")
             else:
                 lockdb.insert_one({f"{data[parameter]}": message.chat.id})
                 await message.reply(f"Locked {parameter}")
             return
         elif parameter in data and state == "unlock":
-            okletsgo = lockdb.find_one({f"{data[parameter]}": message.chat.id})
-            if not okletsgo:
-                await message.reply(f"{parameter} already unlocked")
-            else:
+            if okletsgo := lockdb.find_one({f"{data[parameter]}": message.chat.id}):
                 lockdb.delete_one({f"{data[parameter]}": message.chat.id})
                 await message.reply(f"Unocked {parameter}")
-            return            
+            else:
+                await message.reply(f"{parameter} already unlocked")
+            return
         elif parameter == "all" and state == "lock":
-            for i in range (0,len(array1)):
-                    isittrue = lockdb.find_one({f"{array1[i]}": message.chat.id})
-                    if not isittrue:
-                        lockdb.insert_one({f"{array1[i]}": message.chat.id})
+            for i in range(len(array1)):
+                isittrue = lockdb.find_one({f"{array1[i]}": message.chat.id})
+                if not isittrue:
+                    lockdb.insert_one({f"{array1[i]}": message.chat.id})
             return await message.reply_text("Locked Everything.")
         elif parameter == "bots" and state == "lock":
 
             if await is_b_on(chat_id):
                 return await message.reply_text("Bots already locked.")
             await b_on(chat_id)
-            await message.reply_text("Locked bots.")    
+            await message.reply_text("Locked bots.")
         elif parameter == "bots" and state == "unlock":
             if await is_b_on(chat_id):
                 await b_off(chat_id) 
                 await message.reply_text("Unlocked bots.")  
             else:
-                await message.reply_text("Bots not locked.") 
+                await message.reply_text("Bots not locked.")
         elif parameter == "all" and state == "unlock":
-            for i in range (0,len(array1)):
-                    isittrue = lockdb.find_one({f"{array1[i]}": message.chat.id})
-                    if isittrue:
-                        lockdb.delete_one({f"{array1[i]}": message.chat.id})
+            for i in range(len(array1)):
+                if isittrue := lockdb.find_one({f"{array1[i]}": message.chat.id}):
+                    lockdb.delete_one({f"{array1[i]}": message.chat.id})
             if await is_b_on(chat_id):
-                await b_off(chat_id) 
+                await b_off(chat_id)
             Escobar = remove_chat(int(message.chat.id))
-            if not Escobar:
-                pass                
-            return await message.reply_text("unLocked all.")    
+            return await message.reply_text("unLocked all.")
         else:
             return await message.reply(incorrect_parameters)
 
     except Exception as e:
-        await app.send_message(chat_id = LOG_GROUP_ID,text=e)
+        await app.send_message(chat_id=LOG_GROUP_ID, text=e)
         print(e)
+
 
 @pbot.on_message(filters.command("locks") & ~filters.private)
 async def list_locks_dfunc(_, message):
     user_id = message.from_user.id
     text = f"**These are the locks in this chat:**\n"
-    for i in range (0,len(array1)):
-            isittrue = lockdb.find_one({f"{array1[i]}": message.chat.id})
-            if isittrue:
-                text += f" • {array2[i]} = `Locked `\n" 
-            else:
-                text += f" • {array2[i]} = `None`\n" 
-    await message.reply_text(text)      
+    for i in range(len(array1)):
+        isittrue = lockdb.find_one({f"{array1[i]}": message.chat.id})
+        if isittrue:
+            text += f" • {array2[i]} = `Locked `\n" 
+        else:
+            text += f" • {array2[i]} = `None`\n"
+    await message.reply_text(text)
     try:
         await app.send_message(chat_id = user_id,text = text)
     except Exception as e:
@@ -194,7 +190,7 @@ async def list_locks_dfunc(_, message):
 @pbot.on_message(filters.command("locktypes") & ~filters.private)
 async def wew(_, message):
     lol = "**Locktypes available for this chat:  ** \n"
-    for i in range (0,len(array2)):
+    for i in range(len(array2)):
         lol += f" • {array2[i]}\n"
     lol += "\n • all"
     await message.reply(lol)

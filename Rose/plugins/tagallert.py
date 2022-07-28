@@ -13,34 +13,34 @@ def get_info(id):
 @app.on_message(command(["tagalert"]))
 @language
 async def locks_dfunc(client, message: Message, _):
-   lol = await message.reply(_["spoil2"])
-   if len(message.command) != 2:
-      return await lol.edit(_["tagg1"])
+    lol = await message.reply(_["spoil2"])
+    if len(message.command) != 2:
+        return await lol.edit(_["tagg1"])
 
-   parameter = message.text.strip().split(None, 1)[1].lower()
+    parameter = message.text.strip().split(None, 1)[1].lower()
 
-   if parameter == "on" or parameter=="ON":
-     if not message.from_user:
-       return
-     if not message.from_user.username:
-       return await lol.edit(_["tagg2"])
+    if parameter in ["on", "ON"]:
+        if not message.from_user:
+            return
+        if not message.from_user.username:
+            return await lol.edit(_["tagg2"])
 
-     uname=str(message.from_user.username)
-     uname = uname.lower()
-     taggeddb.insert_one({f"teg": uname})
-     return await lol.edit(_["tagg3"].format(uname))
+        uname=str(message.from_user.username)
+        uname = uname.lower()
+        taggeddb.insert_one({"teg": uname})
+        return await lol.edit(_["tagg3"].format(uname))
 
-   if parameter == "off" or parameter=="OFF":
-     if not message.from_user:
-       return
-     if not message.from_user.username:
-       return await lol.edit(_["tagg2"])
-     uname = message.from_user.username
-     uname = uname.lower()
-     taggeddb.delete_one({f"teg": uname})
-     return await lol.edit(_["tagg5"])
-   else:
-     await lol.edit(_["tagg1"])
+    if parameter in ["off", "OFF"]:
+        if not message.from_user:
+            return
+        if not message.from_user.username:
+            return await lol.edit(_["tagg2"])
+        uname = message.from_user.username
+        uname = uname.lower()
+        taggeddb.delete_one({"teg": uname})
+        return await lol.edit(_["tagg5"])
+    else:
+        await lol.edit(_["tagg1"])
        
 @app.on_message(filters.incoming,group=tagallert)
 async def mentioned_alert(client, message):   
@@ -50,19 +50,19 @@ async def mentioned_alert(client, message):
             return
         if not message.from_user:
             message.continue_propagation()
-            return    
+            return
         input_str = message.text
         input_str = input_str.lower()
         if "@" in input_str:
-            
+
             input_str = input_str.replace("@", "  |")
             Rose = input_str.split("|")[1]
             text = Rose.split()[0]
-        isittrue = taggeddb.find_one({f"teg": text})    
-        if isittrue == None:
-          return
+        isittrue = taggeddb.find_one({"teg": text})
+        if isittrue is None:
+            return
         if text == message.chat:
-          return 
+          return
         try:
             chat_name = message.chat.title
             tagged_msg_link = message.link   

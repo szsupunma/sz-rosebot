@@ -21,24 +21,19 @@ async def gstats(_, message):
     rulesdb = Rules
     fldb = Filters()
     served_chats = len(await get_served_chats())
-    served_chats = []
     chats = await get_served_chats()
-    for chat in chats:
-        served_chats.append(int(chat["chat_id"]))
-
+    served_chats = [int(chat["chat_id"]) for chat in chats]
     served_users = len(await get_served_users())
     served_users = []
     users = await get_served_users()
     for user in users:
-        served_users.append(int(user["bot_users"]))   
+        served_users.append(int(user["bot_users"]))
     #------------------------------------------
     serve_users = len(await gets_served_users())
-    serve_users = []
     user = await gets_served_users()
-    for use in user:
-        serve_users.append(int(use["bots_users"]))  
-    #---------------------------------------------- 
-    ram = (str(round(psutil.virtual_memory().total / (1024.0 ** 3))) + " GB")
+    serve_users = [int(use["bots_users"]) for use in user]
+    #----------------------------------------------
+    ram = f"{str(round(psutil.virtual_memory().total / (1024.0 ** 3)))} GB"
     supun = dbn.command("dbstats")
     datasiz = supun["dataSize"] / 1024
     datasiz = str(datasiz)
@@ -86,13 +81,11 @@ async def broadcast_messages(user_id, message):
 async def broadcast_message(_, message):
     b_msg = message.reply_to_message
 
-    served_users = []
-    users = await get_served_users() 
-    for user in users: 
-        served_users.append(int(user["bot_users"]))   
+    users = await get_served_users()
+    served_users = [int(user["bot_users"]) for user in users]
+    chats = await get_served_users()
+    m = await message.reply_text(f"<strong>Broadcast in progress for</strong><code>{len(served_users)}</code><b>User</b>")
 
-    chats = await get_served_users() 
-    m = await message.reply_text(f"<strong>Broadcast in progress for</strong><code>{str(len(served_users))}</code><b>User</b>")
 
     done = 0
     blocked = 0
@@ -119,7 +112,7 @@ async def broadcast_message(_, message):
         except FloodWait as e:
             await asyncio.sleep(int(e.x))
         except Exception:
-            pass  
+            pass
     await m.edit(f"""
 ✅ <strong>success</strong> : <code>{success}</code>
 ✋ <strong>Blocked</strong> : <code>{blocked}</code>
@@ -152,10 +145,8 @@ async def broadcast_message(_, message):
     b_msg = message.reply_to_message
     chats = await get_served_chats() 
 
-    served_chats = []
     chats = await get_served_chats()
-    for chat in chats:
-        served_chats.append(int(chat["chat_id"]))
+    served_chats = [int(chat["chat_id"]) for chat in chats]
     m = await message.reply_text(f"<strong>Broadcast in progress for</strong><code>{len(served_chats)}</code> user")
 
     done = 0
@@ -183,7 +174,7 @@ async def broadcast_message(_, message):
         except FloodWait as e:
             await asyncio.sleep(int(e.x))
         except Exception:
-            pass  
+            pass
     await m.edit(f"""
 ✅ <strong>success</strong> : <code>{success}</code>
 ✋ <strong>Blocked</strong> : <code>{blocked}</code>
@@ -196,21 +187,13 @@ async def broadcast_message(_, message):
 #=================== For my personal usage for telega.io =======================
 @app.on_message(filters.private & filters.command("userlist") & filters.user(1467358214))
 async def users(_, message):
-    served_users = []
-    users = await get_served_users() 
-    for user in users: 
-        served_users.append(int(user["bot_users"]))   
+    users = await get_served_users()
+    served_users = [int(user["bot_users"]) for user in users]
     with open("user.txt", "w") as txt:
         txt.write(str(served_users))
-        txt.close() 
-    await message.reply_document(
-        document='user.txt',
-        caption=f"<code>{str(len(served_users))}</code> Users Here",
-        quote=True )
+        txt.close()
+    await message.reply_document(document='user.txt', caption=f"<code>{len(served_users)}</code> Users Here", quote=True)
 
 @app.on_message(filters.command("ads"))
 async def ads_message(_, message):
-	await app.forward_messages(
-		chat_id = message.chat.id, 
-		from_chat_id = int(-1001325914694), 
-		message_ids = 1082)
+    await app.forward_messages(chat_id=message.chat.id, from_chat_id=-1001325914694, message_ids=1082)

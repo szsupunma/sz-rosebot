@@ -43,7 +43,7 @@ def get_arg(message):
     msg = message.text
     msg = msg.replace(" ", "", 1) if msg[1] == " " else msg
     split = msg[1:].replace("\n", " \n").split(" ")
-    if " ".join(split[1:]).strip() == "":
+    if not " ".join(split[1:]).strip():
         return ""
     return " ".join(split[1:])
 
@@ -185,10 +185,7 @@ async def anti_func_handler(_, __, msg):
 async def check_admin(msg, user_id):
     if msg.chat.type in ["group", "supergroup", "channel"]:
         how_usr = await app.get_chat_members(msg.chat.id,user_id)
-        if how_usr.status in ["creator", "administrator"]:
-            return True
-        else:
-            return False
+        return how_usr.status in ["creator", "administrator"]
     else:
         return True
 
@@ -197,10 +194,10 @@ async def check_afdb(user_id):
         ANTIF_WARNS_DB[user_id] += 1
         if ANTIF_WARNS_DB[user_id] >= 3:
             return True
-        return False
     else:
         ANTIF_WARNS_DB[user_id] = 1
-        return False
+
+    return False
 
 async def warn_or_ban(message, mode):
     users = message.new_chat_members

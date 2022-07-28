@@ -17,8 +17,7 @@ def split_limits(text):
         else:
             result.append(small_msg)
             small_msg = line
-    else:
-        result.append(small_msg)
+    result.append(small_msg)
 
     return result
 

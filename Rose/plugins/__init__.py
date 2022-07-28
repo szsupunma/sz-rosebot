@@ -5,7 +5,7 @@ from os.path import basename, dirname, isfile
 from Rose import MOD_LOAD, MOD_NOLOAD
 
 def __list_all_modules():
-    mod_paths = glob.glob(dirname(__file__) + "/*.py")
+    mod_paths = glob.glob(f"{dirname(__file__)}/*.py")
     all_modules = [
         basename(f)[:-3]
         for f in mod_paths
