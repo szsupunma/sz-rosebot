@@ -1,12 +1,8 @@
-#================================================================================================
-#================================================================================================
-
 import asyncio
 import requests
 from os import remove
 from pyrogram import filters
 from pyrogram.types import Message
-from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired,UserNotParticipant
 from Rose.utils.filter_groups import spam,spoiler,channel,url,porn
 from typing import Union
 from Rose.plugins.protection import get_file_id
@@ -33,7 +29,7 @@ async def audiolock(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return            
+            return     
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"Audio","Audio"))
         await asyncio.sleep(5)
@@ -58,7 +54,7 @@ async def videolock(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return           
+            return    
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"Video","Video"))
         await asyncio.sleep(5)
@@ -85,7 +81,7 @@ async def doclock(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return            
+            return     
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"Document","Document"))
         await asyncio.sleep(5)
@@ -111,7 +107,7 @@ async def emaeil(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return        
+            return 
     texct = message.text
     if "@gmail.com" in texct:
         try:
@@ -172,7 +168,7 @@ async def fwd(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return          
+            return   
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"Forward","Forward"))
         await asyncio.sleep(5)
@@ -184,7 +180,7 @@ async def fwd(client, message):
 @pbot.on_message(filters.sticker & ~filters.private & ~filters.linked_channel & ~filters.bot)
 async def slock(client, message):
     if not message.chat:
-      return       
+      return
     if lockdb.find_one({"stc": message.chat.id}):
         pass
     else:
@@ -198,7 +194,7 @@ async def slock(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return            
+            return     
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"sticker","Sticker"))
         await asyncio.sleep(5)
@@ -210,7 +206,7 @@ async def slock(client, message):
 @pbot.on_message(filters.animation & ~filters.private & ~filters.linked_channel & ~filters.bot)
 async def aalock(client, message):
     if not message.chat:
-      return       
+      return
     if lockdb.find_one({"gif": message.chat.id}):
         pass
     else:
@@ -224,7 +220,7 @@ async def aalock(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return           
+            return    
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"Gif","Gif"))
         await asyncio.sleep(5)
@@ -236,7 +232,7 @@ async def aalock(client, message):
 @pbot.on_message(filters.game & ~filters.private & ~filters.linked_channel & ~filters.bot)
 async def aggalock(client, message):
     if not message.chat:
-      return       
+      return
     if lockdb.find_one({"game": message.chat.id}):
         pass
     else:
@@ -250,7 +246,7 @@ async def aggalock(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return             
+            return      
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"Game","Game"))
         await asyncio.sleep(5)
@@ -262,7 +258,7 @@ async def aggalock(client, message):
 @pbot.on_message(filters.incoming & filters.media_group & ~filters.private & ~filters.linked_channel & ~filters.bot)
 async def alggsjalock(client, message):
     if not message.chat:
-      return       
+      return
     if lockdb.find_one({"albm": message.chat.id}):
         pass
     else:
@@ -276,7 +272,7 @@ async def alggsjalock(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return            
+            return     
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"Game","Game"))
         await asyncio.sleep(5)
@@ -289,7 +285,7 @@ async def alggsjalock(client, message):
 @pbot.on_message(filters.voice & ~filters.private & ~filters.linked_channel & ~filters.bot)
 async def alggalgossck(client, message):
     if not message.chat:
-      return       
+      return
     if lockdb.find_one({"voice": message.chat.id}):
         pass
     else:
@@ -303,7 +299,7 @@ async def alggalgossck(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return             
+            return      
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"Voice","Voice"))
         await asyncio.sleep(5)
@@ -315,7 +311,7 @@ async def alggalgossck(client, message):
 @pbot.on_message(filters.video_note & ~filters.private & ~filters.linked_channel & ~filters.bot)
 async def alggalock(client, message):
     if not message.chat:
-      return       
+      return
     if lockdb.find_one({"vnote": message.chat.id}):
         pass
     else:
@@ -329,7 +325,7 @@ async def alggalock(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return           
+            return    
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"Video_note","Video_note"))
         await asyncio.sleep(5)
@@ -341,7 +337,7 @@ async def alggalock(client, message):
 @pbot.on_message(filters.contact & ~filters.private & ~filters.linked_channel & ~filters.bot)
 async def alggalololck(client, message):
     if not message.chat:
-      return       
+      return
     if lockdb.find_one({"contact": message.chat.id}):
         pass
     else:
@@ -355,7 +351,7 @@ async def alggalololck(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return        
+            return 
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"Contact","Contact"))
         await asyncio.sleep(5)
@@ -367,7 +363,7 @@ async def alggalololck(client, message):
 @pbot.on_message(filters.location & ~filters.private & ~filters.linked_channel & ~filters.bot)
 async def alggalololck(client, message):
     if not message.chat:
-      return       
+      return
     if lockdb.find_one({"gps": message.chat.id}):
         pass
     else:
@@ -381,7 +377,7 @@ async def alggalololck(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return            
+            return     
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"Location","Location"))
         await asyncio.sleep(5)
@@ -393,7 +389,7 @@ async def alggalololck(client, message):
 @pbot.on_message(filters.venue & ~filters.private & ~filters.linked_channel & ~filters.bot)
 async def alggalololck(client, message):
     if not message.chat:
-      return       
+      return
     if lockdb.find_one({"address": message.chat.id}):
         pass
     else:
@@ -407,7 +403,7 @@ async def alggalololck(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return            
+            return     
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"Venue","Venue"))
         await asyncio.sleep(5)
@@ -419,7 +415,7 @@ async def alggalololck(client, message):
 @pbot.on_message(filters.reply & ~filters.private & ~filters.linked_channel & ~filters.bot)
 async def reply(client, message):
     if not message.chat:
-      return       
+      return
     if lockdb.find_one({"reply": message.chat.id}):
         pass
     else:
@@ -433,7 +429,7 @@ async def reply(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return          
+            return   
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"Reply","Reply"))
         await asyncio.sleep(5)
@@ -500,14 +496,14 @@ async def edt(client, message):
 @pbot.on_message(filters.incoming  & ~filters.private & ~filters.linked_channel & ~filters.bot)
 async def mnsn(client, message):
     if not message.chat:
-      return   
+      return
     if lockdb.find_one({"mention": message.chat.id}):
         pass
     else:
         message.continue_propagation()
     textl = message.text
     textl = str(textl)
-    if not "@" in textl:
+    if "@" not in textl:
         return message.continue_propagation()
     try:
         if len(await member_permissions(message.chat.id, message.from_user.id)) > 1:
@@ -518,7 +514,7 @@ async def mnsn(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return    
+            return
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"Mention","Mention"))
         await asyncio.sleep(5)
@@ -531,7 +527,7 @@ async def mnsn(client, message):
 @pbot.on_message(filters.via_bot & ~filters.private & ~filters.linked_channel & ~filters.bot)
 async def inln(client, message):
     if not message.chat:
-      return      
+      return
     if lockdb.find_one({"inline": message.chat.id}):
         pass
     else:
@@ -545,7 +541,7 @@ async def inln(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return        
+            return 
     try:
         supun = await app.send_message(chat_id = message.chat.id, text = del_message.format(message.from_user.mention,"Inline","Inline"))
         await asyncio.sleep(5)
@@ -557,7 +553,7 @@ async def inln(client, message):
 @pbot.on_message(filters.poll & ~filters.private & ~filters.linked_channel & ~filters.bot)
 async def poll(client, message):
     if not message.chat:
-      return       
+      return
     if lockdb.find_one({"poll": message.chat.id}):
         pass
     else:
@@ -571,7 +567,7 @@ async def poll(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return        
+            return 
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"Poll","Poll"))
         await asyncio.sleep(5)
@@ -583,7 +579,7 @@ async def poll(client, message):
 @pbot.on_message(filters.incoming & filters.dice & ~filters.private & ~filters.linked_channel & ~filters.bot)
 async def diced(client, message):
     if not message.chat:
-      return       
+      return
     if lockdb.find_one({"dice": message.chat.id}):
         pass
     else:
@@ -597,7 +593,7 @@ async def diced(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return        
+            return 
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"Dice","Dice"))
         await asyncio.sleep(5)
@@ -610,7 +606,7 @@ async def diced(client, message):
 @pbot.on_message(filters.inline_keyboard & ~filters.private & ~filters.linked_channel & ~filters.bot)
 async def button(client, message):
     if not message.chat:
-      return       
+      return
     if lockdb.find_one({"button": message.chat.id}):
         pass
     else:
@@ -636,7 +632,7 @@ async def button(client, message):
 @pbot.on_message(filters.photo & ~filters.private & ~filters.linked_channel & ~filters.bot)
 async def mediwa(client, message):
     if not message.chat:
-      return       
+      return
     if lockdb.find_one({"pic": message.chat.id}):
         pass
     else:
@@ -650,7 +646,7 @@ async def mediwa(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return          
+            return   
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"Photo","Photo"))
         await asyncio.sleep(5)
@@ -662,7 +658,7 @@ async def mediwa(client, message):
 @pbot.on_message(filters.media & ~filters.private & ~filters.linked_channel & ~filters.bot)
 async def mediwa(client, message):
     if not message.chat:
-      return       
+      return
     if lockdb.find_one({"media": message.chat.id}):
         pass
     else:
@@ -676,7 +672,7 @@ async def mediwa(client, message):
     chats = [user[0] for user in approved_users]
     for c in chats:
         if message.from_user.id == int(c):
-            return          
+            return   
     try:
         supun = await app.send_message(chat_id = message.chat.id,text = del_message.format(message.from_user.mention,"Media","Media"))
         await asyncio.sleep(5)
@@ -718,13 +714,14 @@ async def urls(client, message):
 )
 async def porn_hub(client, message):  
     if not message.chat:
-        return  
+        return
     file_id = get_file_id(message)
     if not file_id:
-        return 
-    file = await app.download_media(file_id)      
+        return
+    file = await app.download_media(file_id)
     try:
-        data = requests.post(f"https://api.safone.tech/nsfw", files={'image': open(file, 'rb')}).json()
+        data = requests.post("https://api.safone.tech/nsfw", files={'image': open(file, 'rb')}).json()
+
         is_nsfw = data['data']['is_nsfw']
         neutral = data['data']['neutral']
         hentai = data['data']['hentai']
@@ -732,7 +729,7 @@ async def porn_hub(client, message):
         porn = data['data']['porn']
         sexy = data['data']['sexy']
     except Exception:
-        return 
+        return
     remove(file)
     user_id = message.from_user.id if message.from_user else message.sender_chat.id
     if is_nsfw == "true":
@@ -767,17 +764,16 @@ async def porn_hub(client, message):
 async def channel(client, message):
     chat_id = message.chat.id
     if message.sender_chat:
-      sender = message.sender_chat
-      if message.forward_from_chat and not message.from_user : return
-      if not lockdb.find_one({"anonchannel": message.chat.id}) or lockdb.find_one({"channel": message.chat.id}):
-         return 
-      if chat_id == sender.id:
-        return
-      await message.delete()
-      ti = await message.reply_text(f"""
-{sender.title}, Your message was deleted as it from channel(s). \n ❗️ channel are not allowed here""")
-      await asyncio.sleep(10)
-      await ti.delete()
+        sender = message.sender_chat
+        if message.forward_from_chat and not message.from_user : return
+        if not lockdb.find_one({"anonchannel": message.chat.id}) or lockdb.find_one({"channel": message.chat.id}):
+            return 
+        if chat_id == sender.id:
+            return
+        await message.delete()
+        ti = await message.reply_text(f"{sender.title}, Your message was deleted as it from channel(s). \n ❗️ channel are not allowed here")
+        await asyncio.sleep(10)
+        await ti.delete()
 
 @app.on_message(
         ~filters.private
@@ -830,15 +826,16 @@ def get_url(message_1: Message) -> Union[str, None]:
 )
 async def spam_locked(client, message):  
     if not message.chat:
-        return  
+        return
     try:
-        data = requests.post(f"https://api.safone.tech/spam", json={'text': message.text}).json()
+        data = requests.post("https://api.safone.tech/spam", json={'text': message.text}).json()
+
         is_spam = data['data']['is_spam']
         spam_probability = data['data']['spam_probability']
         spam = data['data']['spam']
         ham = data['data']['ham']
     except Exception:
-        return 
+        return
     user_id = message.from_user.id if message.from_user else message.sender_chat.id
     if is_spam=="true":
 

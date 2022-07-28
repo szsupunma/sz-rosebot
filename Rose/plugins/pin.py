@@ -14,9 +14,7 @@ async def pin_message(client, message: Message, _):
     pin_args = message.text.split(None, 1)
     if message.reply_to_message:
         try:
-            disable_notification = True
-            if len(pin_args) >= 2 and pin_args[1] in ["alert", "notify", "loud"]:
-                disable_notification = False
+            disable_notification = len(pin_args) < 2 or pin_args[1] not in ["alert", "notify", "loud"]
             await message.reply_to_message.pin(disable_notification=disable_notification)
             if message.chat.username:
                 link_chat_id = message.chat.username
@@ -26,9 +24,9 @@ async def pin_message(client, message: Message, _):
                 message_link = (f"https://t.me/c/{link_chat_id}/{message.reply_to_message.message_id}")
             await message.reply_text(_["pin1"].format(message_link),disable_web_page_preview=True)
         except Exception as e:
-                await app.send_message(LOG_GROUP_ID,text=e)   
+            await app.send_message(LOG_GROUP_ID, text=e)
     else:
-            await message.reply_text(_["pin4"])
+        await message.reply_text(_["pin4"])
     return
 
 
@@ -132,7 +130,7 @@ async def perma_pin(client, message: Message, _):
 
 
 __MODULE__ = Pin
-__HELP__ = f"""
+__HELP__ = """
 All the pin related commands can be found here; 
 keep your chat up to date on the latest news with 
 a simple pinned message!

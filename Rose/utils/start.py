@@ -25,8 +25,7 @@ async def get_private_rules(_, m: Message, help_option: str):
     return ""
 
 async def get_learn(_, m: Message, help_option: str):
-    await m.reply_text(
-        f"""
+    await m.reply_text("""
 the other way to use me is to write the inline query by your self
 the format should be in this arrangement
 
@@ -49,10 +48,8 @@ example:-
 📎 the bot works in groups and the target user should be in the same group with you
 what you are waiting for?!
 try me now 😉
-""",
-        quote=True,
-        disable_web_page_preview=True,
-    )
+""", quote=True, disable_web_page_preview=True)
+
     return ""
 
 

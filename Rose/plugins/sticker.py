@@ -176,7 +176,7 @@ async def kang(client, message: Message):
         e = format_exc()
         return print(e)
     packnum = 0
-    packname = "f" + str(message.from_user.id) + "_by_" + BOT_USERNAME
+    packname = f"f{str(message.from_user.id)}_by_{BOT_USERNAME}"
     limit = 0
     try:
         while True:
@@ -205,11 +205,8 @@ async def kang(client, message: Message):
                     return await msg.edit("[ERROR]: INVALID_EMOJI_IN_ARGUMENT")
             limit += 1
             break
-        await msg.edit(
-            "Sticker Kanged To [Pack](t.me/addstickers/{})\nEmoji: {}".format(
-                packname, sticker_emoji
-            )
-        )
+        await msg.edit(f"Sticker Kanged To [Pack](t.me/addstickers/{packname})\nEmoji: {sticker_emoji}")
+
     except (PeerIdInvalid, UserIsBlocked):
         keyboard = InlineKeyboardMarkup(
             [[InlineKeyboardButton(text="Start", url=f"t.me/{BOT_USERNAME}")]]
@@ -256,7 +253,7 @@ async def take_ss(_, message: Message):
  """
 
 __MODULE__ = Sticker
-__HELP__ = f"""
+__HELP__ = """
  - /stickerid: Get id of a sticker.
  - /getsticker: To get sticker as a photo and document.
  - /kang: To kang a Sticker or an Image.

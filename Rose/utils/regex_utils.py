@@ -3,11 +3,8 @@ from regex import search
 async def regex_searcher(regex_string: str, string: str) -> str:
     try:
         re_search = search(regex_string, string, timeout=6)
-    except TimeoutError:
-        return False
     except Exception:
         return False
-
     return re_search
 
 

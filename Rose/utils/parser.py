@@ -45,19 +45,18 @@ def parser(text):
                     buttons.append([InlineKeyboardButton(
                         text=match.group(2),
                         callback_data=match.group(4).replace(" ", ""))])
+            elif bool(match.group(5)) and buttons:
+                buttons[-1].append(InlineKeyboardButton(
+                    text=match.group(2),
+                    url=match.group(4).replace(" ", "")))
             else:
-                if bool(match.group(5)) and buttons:
-                    buttons[-1].append(InlineKeyboardButton(
-                        text=match.group(2),
-                        url=match.group(4).replace(" ", "")))
-                else:
-                    buttons.append([InlineKeyboardButton(
-                        text=match.group(2),
-                        url=match.group(4).replace(" ", ""))])
+                buttons.append([InlineKeyboardButton(
+                    text=match.group(2),
+                    url=match.group(4).replace(" ", ""))])
         else:
             outtext += text[prev:to_check]
             prev = match.start(1) - 1
-    else : outtext += text[prev:]
+    outtext += text[prev:]
     try:
         return outtext, buttons
     except:

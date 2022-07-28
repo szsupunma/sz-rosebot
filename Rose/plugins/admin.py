@@ -68,8 +68,8 @@ async def promoteFunc(_, message: Message):
         elif len(message.text.split()) == 2 and message.reply_to_message:
             title = message.text.split()[1]
         if title and len(title) > 16:
-            title = title[0:16]
-        await app.set_administrator_title(message.chat.id, user_id,title)    
+            title = title[:16]
+        await app.set_administrator_title(message.chat.id, user_id,title)
         return await message.reply_text(f"{umention} <b>Was Fullpromoted By</b> {message.from_user.mention} <b>with</b><code>{title}</code><b>title</b>")
     if message.command[0][0] == "m":
         await app.promote_chat_member(
@@ -90,8 +90,8 @@ async def promoteFunc(_, message: Message):
         elif len(message.text.split()) == 2 and message.reply_to_message:
             title = message.text.split()[1]
         if title and len(title) > 16:
-            title = title[0:16]
-        await app.set_administrator_title(message.chat.id, user_id,title)    
+            title = title[:16]
+        await app.set_administrator_title(message.chat.id, user_id,title)
         return await message.reply_text(f"{umention} <b>Was Midpromoted By</b> {message.from_user.mention} <b>with</b><code>{title}</code><b>title</b>")
     await app.promote_chat_member(
         chat_id=message.chat.id,
@@ -110,7 +110,7 @@ async def promoteFunc(_, message: Message):
     elif len(message.text.split()) == 2 and message.reply_to_message:
             title = message.text.split()[1]
     if title and len(title) > 16:
-            title = title[0:16]
+        title = title[:16]
     await app.set_administrator_title(message.chat.id, user_id,title)
     await message.reply_text(f"{umention} <b>Was Promoted By</b> {message.from_user.mention} <b>with</b> <code>{title}</code> <b>title</b>")
 
@@ -141,19 +141,19 @@ async def demote(_, message: Message):
 async def ban_deleted_accounts(client, message: Message, _):
     chat_id = message.chat.id
     deleted_users = []
-    banned_users = 0
     m = await message.reply(_["admin5"])
     async for i in app.get_chat_members(chat_id):
      if i.user.is_deleted:
             deleted_users.append(i.user.id)
     if len(deleted_users) > 0:
+        banned_users = 0
         for deleted_user in deleted_users:
             try:
                 await app.ban_chat_member(chat_id,deleted_user)
             except Exception:
                 pass
             banned_users += 1
-        await m.edit(_["admin21"].format(banned_users)) 
+        await m.edit(_["admin21"].format(banned_users))
     else:
         await m.edit(_["admin6"])
 
@@ -191,8 +191,9 @@ async def set_group_username(client, message: Message, _):
         return await message.reply_text("**Usage:**\n`/setusername` username ")
     username = message.text.split(None, 1)[1]
     try:
-       await app.set_chat_username(chat_id,username)
-       return await message.reply_text("{} was set {} as new username of this chat".format(from_user.mention,username))
+        await app.set_chat_username(chat_id,username)
+        return await message.reply_text(f"{from_user.mention} was set {username} as new username of this chat")
+
     except Exception as ef:
         await message.reply_text(ef)
 
@@ -254,7 +255,7 @@ async def adminlist_show(_, m: Message):
         if str(ef) == str(m.chat.id):
             await m.reply_text("Use /reload to reload admins!")
         else:
-            ef = str(ef) + f"{admin_list}\n"
+            ef = f"{str(ef)}{admin_list}\n"
             await m.reply_text("error : @slbotzone : `adminlist`")
     return
 

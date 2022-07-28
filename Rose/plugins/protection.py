@@ -27,7 +27,7 @@ async def nsfw_scan_command(_, message: Message):
         return await m.edit("Something went wrong.")
     file = await app.download_media(file_id)
     try:
-        data = requests.post(f"https://api.safone.tech/nsfw", files={'image': open(file, 'rb')}).json()
+        data = requests.post("https://api.safone.tech/nsfw", files={'image': open(file, 'rb')}).json()
         is_nsfw = data['data']['is_nsfw']
         hentai = data['data']['hentai']
         drawings = data['data']['drawings']
@@ -57,7 +57,7 @@ async def scanNLP(_, message: Message):
     text = r.text or r.caption
     if not text:
         return await message.reply("Can't scan that")
-    data = requests.post(f"https://api.safone.tech/spam", json={'text': message.text}).json()
+    data = requests.post("https://api.safone.tech/spam", json={'text': message.text}).json()
     is_spam = data['data']['is_spam']
     spam_probability = data['data']['spam_probability']
     spam = data['data']['spam']
@@ -77,7 +77,7 @@ def get_file_id(message):
         if int(message.document.file_size) > 3145728:
             return
         mime_type = message.document.mime_type
-        if mime_type != "image/png" and mime_type != "image/jpeg":
+        if mime_type not in ["image/png", "image/jpeg"]:
             return
         return message.document.file_id
 

@@ -1,4 +1,3 @@
-from email.quoprimime import quote
 import io
 from re import escape as re_escape
 from secrets import choice
@@ -47,28 +46,27 @@ async def view_filters(client, message: Message, _):
     if chat_type == "private":
         userid = message.from_user.id
         grpid = await active_connection(str(userid))
-        if grpid is not None:
-            grp_id = grpid
-            try:
-                chat = await client.get_chat(grpid)
-                title = chat.title
-            except:
-                return await message.reply_text(_["filter1"])
-        else:
+        if grpid is None:
             return await message.reply_text(_["filter2"])
+        grp_id = grpid
+        try:
+            chat = await client.get_chat(grpid)
+            title = chat.title
+        except:
+            return await message.reply_text(_["filter1"])
     elif chat_type in ["group", "supergroup"]:
         grp_id = message.chat.id
         title = message.chat.title
     else:
         return
     st = await client.get_chat_member(grp_id, userid)
-    if (st.status != "administrator"and st.status != "creator"):
+    if st.status not in ["administrator", "creator"]:
         return
     texts = db.get_all_filters(grp_id)
     if texts:
         filterlist = f"**Total number of filters in** {title} \n\n"
         for text in texts:
-            keywords = "•`{}`\n".format(text)
+            keywords = f"•`{text}`\n"
             filterlist += keywords
         if len(filterlist) > 4096:
             with io.BytesIO(str.encode(filterlist.replace("`", ""))) as keyword_file:
@@ -92,22 +90,21 @@ async def addfilter(client, message: Message, _):
     if chat_type == "private":
         userid = message.from_user.id
         grpid = await active_connection(str(userid))
-        if grpid is not None:
-            grp_id = grpid
-            try:
-                chat = await client.get_chat(grpid)
-                title = chat.title
-            except:
-                return await message.reply_text(_["filter1"])
-        else:
+        if grpid is None:
             return await message.reply_text(_["filter2"])
+        grp_id = grpid
+        try:
+            chat = await client.get_chat(grpid)
+            title = chat.title
+        except:
+            return await message.reply_text(_["filter1"])
     elif chat_type in ["group", "supergroup"]:
         grp_id = message.chat.id
         title = message.chat.title
     else:
         return
     st = await client.get_chat_member(grp_id, userid)
-    if (st.status != "administrator"and st.status != "creator"):
+    if st.status not in ["administrator", "creator"]:
         return
     args = message.command
     if len(args) < 2:
@@ -155,22 +152,21 @@ async def stop_filter(client, message: Message, _):
     if chat_type == "private":
         userid = message.from_user.id
         grpid = await active_connection(str(userid))
-        if grpid is not None:
-            grp_id = grpid
-            try:
-                chat = await client.get_chat(grpid)
-                title = chat.title
-            except:
-                return await message.reply_text(_["filter1"])
-        else:
+        if grpid is None:
             return await message.reply_text(_["filter2"])
+        grp_id = grpid
+        try:
+            chat = await client.get_chat(grpid)
+            title = chat.title
+        except:
+            return await message.reply_text(_["filter1"])
     elif chat_type in ["group", "supergroup"]:
         grp_id = message.chat.id
         title = message.chat.title
     else:
         return
     st = await client.get_chat_member(grp_id, userid)
-    if (st.status != "administrator"and st.status != "creator"):
+    if st.status not in ["administrator", "creator"]:
         return
     args = message.command
     if len(args) < 1:
@@ -186,7 +182,6 @@ async def stop_filter(client, message: Message, _):
             await message.stop_propagation()
     await message.reply_text(_["filter14"])
     await message.stop_propagation()
-
 
 @app.on_message(command(RMALLFILTERS))
 async def rm_allfilters(_, m: Message):
@@ -231,13 +226,12 @@ async def send_filter_reply(c: app, m: Message, trigger: str):
     textt = teks
     try:
         if msgtype == Types.TEXT:
-            if button:
-                try:
-                    return await m.reply_text(textt,reply_markup=button,disable_web_page_preview=True,quote=True)
-                except RPCError as ef:
-                    return await m.reply_text("An error has occured! Cannot parse filters.",quote=True)
-            else:
+            if not button:
                 return await m.reply_text(textt,quote=True,disable_web_page_preview=True)
+            try:
+                return await m.reply_text(textt,reply_markup=button,disable_web_page_preview=True,quote=True)
+            except RPCError as ef:
+                return await m.reply_text("An error has occured! Cannot parse filters.",quote=True)
         elif msgtype in (Types.STICKER,Types.VIDEO_NOTE,Types.CONTACT,Types.ANIMATED_STICKER,):
             await (await send_cmd(c, msgtype))(m.chat.id,getfilter["fileid"],reply_markup=button,reply_to_message_id=m.message_id,)
         else:

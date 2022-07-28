@@ -39,14 +39,15 @@ async def delete_service(_, message):
     try:
         if await is_antiservice_on(chat_id):
             return await message.delete()
-    except Exception:
+    except:
         pass
     
 
 __MODULE__ = formatting
-__HELP__ = f"""
+__HELP__ = """
 **Formatting**
 Rose supports a large number of formatting options to make
 your messages more expressive. Take a look!
 """
+
 __helpbtns__ = ([[InlineKeyboardButton('Markdown ', callback_data="_mdown"),InlineKeyboardButton('Fillings', callback_data='_fillings')],[InlineKeyboardButton('Random Content', callback_data="_random")]])

@@ -30,47 +30,46 @@ async def customize_night(client, message: Message, _):
         return await rose.edit(_["nm5"])
     if message.chat.type == "channel":
         return
+    parameter = message.text.split(None, 1)[1]
+    if parameter == "off":
+        nightmod.delete_one({"id": message.chat.id})
+        return
+    if len(message.command) < 3:
+        return await rose.edit(_["nm11"])
+    if "|" in parameter:
+        zone, ctime, otime = parameter.split("|")
     else:
-        parameter = message.text.split(None, 1)[1]
-        if parameter == "off":
-            nightmod.delete_one({"id": message.chat.id})
-            return 
-        if len(message.command) < 3:
-            return await rose.edit(_["nm11"])
-        if "|" in parameter:
-            zone, ctime, otime = parameter.split("|")
-        else:
-            return await rose.edit(_["nm12"])
-        zone = zone.strip()
-        ctime = ctime.strip()
-        otime = otime.strip()
-        if len(ctime) != 11:
-            return await rose.edit(_["nm13"])
-        if len(otime) != 11:
-            return await rose.edit(_["nm13"])
-        if not zone and ctime and otime:
-            return await rose.edit(_["nm14"])
-        ttime = dateparser.parse("now", settings={"TIMEZONE": f"{zone}", "DATE_ORDER": "YMD"})
-        if ttime is None or otime is None or ctime is None:
-            return await rose.edit("Please enter valid `date`, `time` & `zone`")
-        cctime = dateparser.parse(f"{ctime}", settings={"TIMEZONE": f"{zone}", "DATE_ORDER": "DMY"}) + timedelta(days=1)
-        ootime = dateparser.parse(f"{otime}", settings={"TIMEZONE": f"{zone}", "DATE_ORDER": "DMY"}) + timedelta(days=1)
-        if cctime == ootime:
-            return await rose.edit(_["nm15"])
-        if not ootime > cctime and not cctime < ootime:
-            return await rose.edit(_["nm16"])
-        if cctime > ootime:
-            return await rose.edit("Chat closing time can't be greater than opening time")
-        chats = nightmod.find({})
-        for c in chats:
-            if message.chat.id == c["id"] and c["valid"] is True:
-                to_check = get_info(id=message.chat.id)
-                nightmod.update_one({"_id": to_check["_id"],"id": to_check["id"],"valid": to_check["valid"],"zone": to_check["zone"],"ctime": to_check["ctime"],"otime": to_check["otime"],},{"$set": {"zone": zone, "ctime": cctime, "otime": ootime}})
-                await rose.edit("**Nightmode already set**\n\n__I am updating the zone, closing time and opening time with the new zone, closing time and opening time__")
-                await asyncio.sleep(2)
-                return await rose.edit(f"**Nightmode Updated Successfully in {message.chat.title} chat**")
-        nightmod.insert_one({"id": message.chat.id,"valid": True,"zone": zone,"ctime": cctime,"otime": ootime})
-        await rose.edit(f"**Nightmode set successfully in {message.chat.title} chat !**")
+        return await rose.edit(_["nm12"])
+    zone = zone.strip()
+    ctime = ctime.strip()
+    otime = otime.strip()
+    if len(ctime) != 11:
+        return await rose.edit(_["nm13"])
+    if len(otime) != 11:
+        return await rose.edit(_["nm13"])
+    if not zone and ctime and otime:
+        return await rose.edit(_["nm14"])
+    ttime = dateparser.parse("now", settings={"TIMEZONE": f"{zone}", "DATE_ORDER": "YMD"})
+    if ttime is None or otime is None or ctime is None:
+        return await rose.edit("Please enter valid `date`, `time` & `zone`")
+    cctime = dateparser.parse(f"{ctime}", settings={"TIMEZONE": f"{zone}", "DATE_ORDER": "DMY"}) + timedelta(days=1)
+    ootime = dateparser.parse(f"{otime}", settings={"TIMEZONE": f"{zone}", "DATE_ORDER": "DMY"}) + timedelta(days=1)
+    if cctime == ootime:
+        return await rose.edit(_["nm15"])
+    if not ootime > cctime:
+        return await rose.edit(_["nm16"])
+    if cctime > ootime:
+        return await rose.edit("Chat closing time can't be greater than opening time")
+    chats = nightmod.find({})
+    for c in chats:
+        if message.chat.id == c["id"] and c["valid"] is True:
+            to_check = get_info(id=message.chat.id)
+            nightmod.update_one({"_id": to_check["_id"],"id": to_check["id"],"valid": to_check["valid"],"zone": to_check["zone"],"ctime": to_check["ctime"],"otime": to_check["otime"],},{"$set": {"zone": zone, "ctime": cctime, "otime": ootime}})
+            await rose.edit("**Nightmode already set**\n\n__I am updating the zone, closing time and opening time with the new zone, closing time and opening time__")
+            await asyncio.sleep(2)
+            return await rose.edit(f"**Nightmode Updated Successfully in {message.chat.title} chat**")
+    nightmod.insert_one({"id": message.chat.id,"valid": True,"zone": zone,"ctime": cctime,"otime": ootime})
+    await rose.edit(f"**Nightmode set successfully in {message.chat.title} chat !**")
 
 
 @app.on_message(filters.incoming, group= nm_g)

@@ -1,7 +1,3 @@
-#====================================================================================================
-#====================================================================================================
-
-
 import html
 import time
 import uuid
@@ -37,9 +33,9 @@ from button import Federations
 async def JoinFeds(client, message):
     group_id = message.chat.id
     userid = message.from_user.id if message.from_user else None
-    if not (message.chat.type == 'supergroup'):
+    if message.chat.type != 'supergroup':
         return await message.reply("Only supergroups can join feds.")
-    if not (len(message.command) >= 2):
+    if len(message.command) < 2:
         return await message.reply("You need to specify which federation you're asking about by giving me a FedID!")
     st = await app.get_chat_member(group_id, userid)
     if st.status != "creator":
@@ -57,7 +53,7 @@ async def JoinFeds(client, message):
 async def leaveFeds(client, message):
     group_id = message.chat.id
     userid = message.from_user.id if message.from_user else None
-    if not (len(message.command) >= 2):
+    if len(message.command) < 2:
         return await message.reply("You need to specify which federation you're asking about by giving me a FedID!")
     st = await app.get_chat_member(group_id, userid)
     if st.status != "creator":
@@ -73,7 +69,7 @@ async def leaveFeds(client, message):
 
 @app.on_message(filters.command("fedinfo"))
 async def infoFeds(client, message):
-    if not (len(message.command) >= 2):
+    if len(message.command) < 2:
         return await message.reply("You need to specify which federation you're asking about by giving me a FedID!")
     if not (is_fed_exist(message.command[1])):
         return await message.reply("This FedID does not refer to an existing federation.")
@@ -91,15 +87,15 @@ async def infoFeds(client, message):
 async def NewFed(client, message):
     if (message.chat.type == 'supergroup'):
         return await message.reply('Create your federation in my PM - not in a group.')
-    if not (len(message.command) >= 2):
+    if len(message.command) < 2:
         return await message.reply("Give your federation a name!")
     if (len(' '.join(message.command[1:])) > 60):
         return await message.reply("Your fed must be smaller than 60 words.")
     fed_name = ' '.join(message.command[1:])
     fed_id = str(uuid.uuid4())
-    owner_id = message.from_user.id 
+    owner_id = message.from_user.id
     uname = message.from_user.mention
-    created_time = time.ctime() 
+    created_time = time.ctime()
     new_fed_db(fed_name, fed_id, created_time, owner_id)
     await message.reply(f"""
 <b>Congrats, you have successfully created a federation </b>
@@ -139,13 +135,13 @@ async def fed_checker(client, message):
 @app.on_message(filters.command("fedpromote"))
 async def FedPromote(client, message):
     user_id = await extract_user(message)
-    owner_id = message.from_user.id 
+    owner_id = message.from_user.id
     fed_id = get_fed_from_ownerid(owner_id)
     fed_name = get_fed_name(owner_id=owner_id)
     user = await app.get_users(user_ids=user_id)
     if (message.chat.type == 'private'):
         return await message.reply("This command is made to be run in a group where the person you would like to promote is present.")
-    if (fed_id == None):
+    if fed_id is None:
         return await message.reply("Only federation creators can promote people, and you don't even seem to have a federation to promote to!")
     if (is_user_fban(fed_id, user_id)):
         return await message.reply(f"User {user.mention} is fbanned in {fed_name}. You have to unfban them before promoting.")
@@ -233,22 +229,20 @@ async def unfed_ban(client, message):
     reason = f"{reason_text} // un-Fbanned by {banner_name} id {bannedID}"
     if is_user_fban(fed_id, userID):
         user_unfban(fed_id, userID)
-    else:
-        pass
 
 @app.on_message(filters.command("renamefed"))
 async def Rename_fed(client, message):
-    owner_id = message.from_user.id 
-    if not (message.chat.type == 'private'):
+    owner_id = message.from_user.id
+    if message.chat.type != 'private':
         return await message.reply("You can only rename your fed in PM.")
-    if not (len(message.command) >= 2):
+    if len(message.command) < 2:
         return await message.reply("You need to give your federation a name! Federation names can be up to 64 characters long.")
     if (len(' '.join(message.command[1:])) > 60 ):
         return await message.reply(
             "Your fed must be smaller than 60 words."
         )
     fed_id = get_fed_from_ownerid(owner_id)
-    if fed_id == None:
+    if fed_id is None:
         return await message.reply("It doesn't look like you have a federation yet!")
     fed_name = ' '.join(message.command[1:])
     old_fed_name = get_fed_name(owner_id=owner_id)

@@ -29,10 +29,9 @@ async def extract_user(c: app, m: Message) -> Tuple[int, str, str]:
 
                 try:
                     user_found = int(user_found)
-                except (ValueError, Exception) as ef:
+                except Exception as ef:
                     if "invalid literal for int() with base 10:" in str(ef):
                         user_found = str(user_found)
-
                 try:
                     user = Users.get_user_info(user_found)
                     user_id = user["_id"]
@@ -53,13 +52,9 @@ async def extract_user(c: app, m: Message) -> Tuple[int, str, str]:
         else:
             try:
                 user_id = int(m.text.split()[1])
-            except (ValueError, Exception) as ef:
+            except Exception as ef:
                 if "invalid literal for int() with base 10:" in str(ef):
-                    user_id = (
-                        str(m.text.split()[1])
-                        if (m.text.split()[1]).startswith("@")
-                        else None
-                    )
+                    user_id = str(m.text.split()[1]) if m.text.split()[1].startswith("@") else None
                 else:
                     user_id = m.text.split()[1]
             if user_id is not None:

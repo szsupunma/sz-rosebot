@@ -24,7 +24,7 @@ async def cbots(client, message: Message, _):
     chat_id = message.chat.id
     user_id = message.from_user.id
     user = await app.get_chat_member(group_id, user_id)
-    if not user.status == "creator" or user.status == "administrator":
+    if user.status not in ["administrator", "creator"]:
         return
     if len(message.command) < 2:
         return await message.reply_text(_["chatb1"])
@@ -34,9 +34,9 @@ async def cbots(client, message: Message, _):
     sex = await message.reply_text(_["antil2"])
     lower_args = args.lower()
     if lower_args == "on":
-        chatb.insert_one({f"chatbot": group_id})
+        chatb.insert_one({"chatbot": group_id})
     elif lower_args == "off":
-        chatb.delete_one({f"chatbot": group_id})
+        chatb.delete_one({"chatbot": group_id})
     else:
         return await sex.edit(_["chatb1"])
     await sex.edit(f"✅ **Successfully** `{'Enabled' if lower_args=='on' else 'Disabled'}` ** Chat bot**")

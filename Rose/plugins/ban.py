@@ -37,8 +37,8 @@ async def kickFunc(client, message: Message, _):
         return
     try:
         user_id = await extract_user(message)
-    except Exception:
-        return   
+    except:
+        return
     if not user_id:
         return await message.reply_text(_["ban2"])  
     st = await client.get_chat_member(message.chat.id, user_id)

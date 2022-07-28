@@ -30,8 +30,8 @@ async def langs_command(client, message: Message, _):
     elif chat_type in ["group", "supergroup"]:
         group_id = message.chat.id
         st = await app.get_chat_member(group_id, userid)
-        if(st.status != "administrator" and st.status != "creator"):
-         return 
+        if st.status not in ["administrator", "creator"]:
+            return
         try:   
          await message.reply_text( "Choose Your languages",reply_markup=keyboard)
         except Exception as e:

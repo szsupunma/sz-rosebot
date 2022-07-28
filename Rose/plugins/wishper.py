@@ -18,7 +18,7 @@ async def wishper_ai(_, sz: InlineQuery):
     split = query.split(' ', 1)
     if query == '' or len(query) > lengths \
             or (query.startswith('@') and len(split) == 1):
-        title = f"🔐 Write a whisper message"
+        title = "🔐 Write a whisper message"
         content = ("**Send whisper messages through inline mode**\n\n"
                    "Usage: `@szrosebot [@username] text`")
         description = "Usage: @szrosebot [@username] text"
@@ -34,7 +34,7 @@ async def wishper_ai(_, sz: InlineQuery):
         )
         description = f"{emoji.SHUSHING_FACE} {query}"
         button = InlineKeyboardButton(
-            f"🎯 show message",
+            "🎯 show message",
             callback_data="show_whisper"
         )
 
@@ -50,7 +50,7 @@ async def wishper_ai(_, sz: InlineQuery):
 
     switch_pm_text = f"{emoji.INFORMATION} Learn how to send whispers"
     switch_pm_parameter = "learn"
-    
+
     await sz.answer(
         results=[
             InlineQueryResultArticle(
